@@ -95,3 +95,18 @@ Workflow:
 | 10 | `review/r10_eval_metrics` | Streaming metrics, threshold selection, early stopping |
 | 11 | `review/r11_contrastive` | CLIP-style contrastive (InfoNCE) loss |
 | 12 | `review/r12_async_checkpoint` | Non-blocking checkpointing |
+
+## Pair-programming practice (interview prep)
+
+`interview/i01_mistral_rag`: build a RAG pipeline that combines a third-party retrieval API
+(Wikipedia search) with the Mistral chat API, in timed stages, like a live pair-programming
+round. Modeled on a reported Mistral AI Applied AI Engineer interview. Focus: API skills (auth,
+timeouts, retries with backoff, response validation, streaming, async concurrency, testability).
+
+```bash
+cat interview/i01_mistral_rag/TASK.md                       # start here
+uv run pytest interview/i01_mistral_rag -k stage1 -rA        # check one stage (offline, no key needed)
+uv run python interview/i01_mistral_rag/run_live.py "question"   # live run (fake LLM if no MISTRAL_API_KEY)
+cp interview/i01_mistral_rag/hard/rag.py interview/i01_mistral_rag/rag.py   # hard mode
+```
+After the session, read `solution/NOTES.md`: rubric, common mistakes, follow-up questions.

@@ -4,6 +4,8 @@
   With --solution, importing the stub module loads solution.py in its place.
 - review/<sample>/: pr.py (the buggy pull request), its tests, and solution/fixed.py.
   With --solution, importing pr.py loads solution/fixed.py in its place.
+- interview/<exercise>/: one module you write (e.g. rag.py), its tests, and
+  solution/solution.py. With --solution, importing that module loads the solution instead.
 """
 
 import importlib.abc
@@ -29,6 +31,8 @@ class _SolutionRedirect(importlib.abc.MetaPathFinder):
             answer = ROOT / "practice" / folder / "solution.py"
         elif top == "review" and name == "pr":
             answer = ROOT / "review" / folder / "solution" / "fixed.py"
+        elif top == "interview" and not name.startswith("test_") and name != "conftest":
+            answer = ROOT / "interview" / folder / "solution" / "solution.py"
         else:
             return None
         if not answer.exists():
@@ -40,7 +44,7 @@ def pytest_addoption(parser: pytest.Parser) -> None:
     parser.addoption(
         "--solution",
         action="store_true",
-        help="Run tests against the reference answers (practice solution.py, review fixed.py).",
+        help="Run tests against the reference answers (solution.py / fixed.py).",
     )
 
 
