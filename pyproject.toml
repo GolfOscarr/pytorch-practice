@@ -24,7 +24,7 @@ build-backend = "hatchling.build"
 packages = ["src/common"]
 
 [tool.pytest.ini_options]
-testpaths = ["tests", "practice"]
+testpaths = ["tests", "practice", "review"]
 pythonpath = ["."]
 addopts = "-q --import-mode=importlib"
 

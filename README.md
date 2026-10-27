@@ -57,3 +57,41 @@ for the problem statement. Try it before opening `solution.py`.
 | 07 | `practice/p07_trainer` | `trainer.py` | Production trainer: config, callbacks, scheduler, checkpoint/resume |
 
 Suggested order: 01 → 07. p03 is independent; do it whenever.
+
+## Code review practice (interview prep)
+
+Each `review/rNN_*` folder is a pull request with planted bugs. You're the reviewer and the
+bug fixer. The PR doesn't say how many bugs there are.
+
+```
+review/rNN_topic/
+  pr.py              the pull request: read the description at the top, then review the code
+  test_pr.py         run AFTER your review to see what you missed (tests don't name the bugs)
+  solution/
+    REVIEW.md        answer key: every bug (line, severity, why, fix) + production improvements
+    fixed.py         corrected, production-quality version
+```
+
+Workflow:
+1. Read `pr.py` and write your review (bugs, severity, fix, production suggestions).
+   Don't run the tests yet.
+2. Fix the bugs in `pr.py`.
+3. `uv run pytest review/r01_transformer -rA` to see which behaviors are still broken.
+4. Compare with `solution/REVIEW.md`. `git restore review/r01_transformer/pr.py` resets the PR.
+
+`uv run pytest review/r01_transformer --solution` runs the tests against `solution/fixed.py`.
+
+| # | Folder | Topic |
+|---|--------|-------|
+| 01 | `review/r01_transformer` | Transformer block / tiny GPT |
+| 02 | `review/r02_training_loop` | Training loop: accumulation, clipping, scheduling, validation |
+| 03 | `review/r03_ppo` | PPO objective and GAE |
+| 04 | `review/r04_parallelism_config` | 3D parallelism planner for a GPU cluster |
+| 05 | `review/r05_ddp` | DistributedDataParallel training script |
+| 06 | `review/r06_data_pipeline` | Data pipeline: splits, leakage, workers, padding |
+| 07 | `review/r07_mixed_precision` | Mixed precision and numerically safe losses |
+| 08 | `review/r08_inference_server` | Batched generation and an async inference service |
+| 09 | `review/r09_lora` | LoRA adapters |
+| 10 | `review/r10_eval_metrics` | Streaming metrics, threshold selection, early stopping |
+| 11 | `review/r11_contrastive` | CLIP-style contrastive (InfoNCE) loss |
+| 12 | `review/r12_async_checkpoint` | Non-blocking checkpointing |
